@@ -75,7 +75,7 @@ namespace BlockStackGridLibrary
         }
         
         
-        public void TransferBlockStack(Block[] blockStack, BlockMovementDefinition definition)
+        public void TransferBlocks(Block[] blockStack, BlockMovementDefinition definition)
         {
             for (int index = 0; index < blockStack.Length; index++)
             {
@@ -94,6 +94,8 @@ namespace BlockStackGridLibrary
             {
                 SpawnSubStack(subStack);
             }
+            
+            OnBlockCountChanged?.Invoke(_spawnedBlocks.Count);
         }
 
         private void SpawnSubStack(BlockSubStack subStack)
@@ -182,7 +184,7 @@ namespace BlockStackGridLibrary
             return topBricks;
         }
 
-        public void TransferBlocks(List<Block> bricks)
+        public void RemoveBlocks(List<Block> bricks)
         {
             foreach (Block brick in bricks)
             {
@@ -322,6 +324,11 @@ namespace BlockStackGridLibrary
         public int GetBlockIndex(Block block)
         {
             return _spawnedBlocks.IndexOf(block);
+        }
+
+        public float GetPeakPoint()
+        {
+            return blockParent.localPosition.y + SlotHeight;
         }
     }
 }
